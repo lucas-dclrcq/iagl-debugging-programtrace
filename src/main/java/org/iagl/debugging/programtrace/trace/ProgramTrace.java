@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ProgramTrace {
     private static ProgramTrace INSTANCE;
@@ -49,8 +50,8 @@ public class ProgramTrace {
         this.configuredTraceTraceLevel = readTraceLevelFromProperties().orElse(TraceLevel.FAIBLE);
         final Path file = new File(filename).toPath();
 
-        try {
-            this.traces = Files.lines(file)
+        try (final var lines = Files.lines(file)) {
+            this.traces = lines
                     .map(Trace::fromLine)
                     .collect(Collectors.toList());
             this.tracesIterator = traces.listIterator();

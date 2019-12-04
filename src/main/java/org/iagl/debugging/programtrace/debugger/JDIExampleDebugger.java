@@ -146,11 +146,16 @@ public class JDIExampleDebugger {
             e.printStackTrace();
         } 
         finally {
-            InputStreamReader reader = new InputStreamReader(vm.process().getInputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(System.out);
-            char[] buf = new char[512];
+            OutputStreamWriter writer;
+            char[] buf;
 
-            reader.read(buf);
+            try (InputStreamReader reader = new InputStreamReader(vm.process().getInputStream())) {
+                writer = new OutputStreamWriter(System.out);
+                buf = new char[512];
+
+                reader.read(buf);
+            }
+
             writer.write(buf);
             writer.flush();
         }
