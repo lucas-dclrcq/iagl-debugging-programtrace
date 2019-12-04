@@ -1,4 +1,4 @@
-package org.iagl.debugging.programtrace;
+package org.iagl.debugging.programtrace.trace;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package org.iagl.debugging.programtrace;
+package org.iagl.debugging.programtrace.trace;
 
 import org.junit.jupiter.api.Test;
 

@@ -7,6 +7,15 @@
     <groupId>org.iagl.debugging</groupId>
     <artifactId>program-trace</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <sonar.projectKey>program-trace</sonar.projectKey>
+        <sonar.organization>iagl</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.login>ffadaa68da8daec077269348b40bc90bfb88513e</sonar.login>
+    </properties>
+
 
     <dependencies>
         <dependency>
@@ -27,10 +36,47 @@
             <version>3.13.2</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
+        <finalName>java-jdi</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>3.6.1.1688</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <arguments>
+                        <argument>org.iagl.debugging.programtrace.debugger.JDIExampleDebugger</argument>
+                    </arguments>
+                    <mainClass>org.iagl.debugging.programtrace.debugger.JDIExampleDebugger</mainClass>
+                    <executable>java</executable>
+                    <workingDirectory>${project.build.outputDirectory}</workingDirectory>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -39,9 +85,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
+                    <debug>true</debug>
+                    <compilerArgs>
+                        <arg>-verbose</arg>
+                        <arg>-Xlint:all,-options,-path</arg>
+                    </compilerArgs>
                     <source>13</source>
                     <target>13</target>
+                    <fork>true</fork>
+                    <executable>javac</executable>
                 </configuration>
             </plugin>
         </plugins>
