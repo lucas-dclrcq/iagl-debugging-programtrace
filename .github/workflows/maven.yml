@@ -4,9 +4,8 @@ on: [push]
 
 jobs:
   build:
-
+    name: Maven Build
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Set up JDK 13
@@ -15,3 +14,8 @@ jobs:
         java-version: 13
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Push sonar analysis
+      run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
