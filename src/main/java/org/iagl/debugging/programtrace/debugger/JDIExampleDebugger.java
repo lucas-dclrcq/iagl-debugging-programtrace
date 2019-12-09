@@ -108,10 +108,9 @@ public class JDIExampleDebugger {
     }
 
     public static void main(String[] args) throws Exception {
-
         JDIExampleDebugger debuggerInstance = new JDIExampleDebugger();
         debuggerInstance.setDebugClass(JDIExampleDebuggee.class);
-        int[] breakPoints = {7, 9};
+        int[] breakPoints = {6};
         debuggerInstance.setBreakPointLines(breakPoints);
         VirtualMachine vm = null;
 
@@ -122,7 +121,6 @@ public class JDIExampleDebugger {
             EventSet eventSet = null;
             while ((eventSet = vm.eventQueue().remove()) != null) {
                 for (Event event : eventSet) {
-                    System.out.println(event.toString());
                     if (event instanceof ClassPrepareEvent) {
                         debuggerInstance.setBreakPoints(vm, (ClassPrepareEvent)event);
                     }
