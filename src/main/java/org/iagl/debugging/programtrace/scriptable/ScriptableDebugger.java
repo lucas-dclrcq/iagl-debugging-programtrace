@@ -36,7 +36,7 @@ public class ScriptableDebugger {
     public VirtualMachine connectAndLaunchVM() throws IOException, IllegalConnectorArgumentsException, VMStartException {
         LaunchingConnector launchingConnector = Bootstrap.virtualMachineManager().defaultConnector();
         Map<String, Connector.Argument> arguments = launchingConnector.defaultArguments();
-        arguments.get("main").setValue("JDIExampleDebuggee");//debugClass.getName());
+        arguments.get("main").setValue(debugClass.getName());//debugClass.getName());
         VirtualMachine vm = launchingConnector.launch(arguments);
         return vm;
     }
@@ -85,7 +85,7 @@ public class ScriptableDebugger {
 
     }
 
-    public void unkownCommandRequest(String commandName) {
+    public void unknownCommandRequest(String commandName) {
         System.out.println("Error: unknown command " + commandName);
     }
 
@@ -96,10 +96,9 @@ public class ScriptableDebugger {
     /***********
      * DEBUGGER CREATION
      * ***********/
-
     public void attachTo(Class debuggeeClass, int attachPoint) {
         this.debugClass = debuggeeClass;
-        this.breakPointLines = new ArrayList<Integer>();
+        this.breakPointLines = new ArrayList<>();
 
         try {
             vm = connectAndLaunchVM();
@@ -109,18 +108,13 @@ public class ScriptableDebugger {
 
             startDebugger();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (IllegalConnectorArgumentsException e) {
-            e.printStackTrace();
         } catch (VMStartException e) {
             e.printStackTrace();
             System.out.println(e.toString());
         } catch (VMDisconnectedException e) {
             e.printStackTrace();
             System.out.println("Virtual Machine is disconnected: " + e.toString());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -133,7 +127,7 @@ public class ScriptableDebugger {
             for (Event event : eventSet) {
                 if (event instanceof ClassPrepareEvent) {
                     SetBreakpointDebugCommand setBPCommand = new SetBreakpointDebugCommand();
-                    setBPCommand.setParameters(new String[]{"break", "4", "JDIExampleDebuggee"});
+                    setBPCommand.setParameters(new String[]{"break", "6", debugClass.getName()});
                     executeCommand(setBPCommand);
                 }
 
