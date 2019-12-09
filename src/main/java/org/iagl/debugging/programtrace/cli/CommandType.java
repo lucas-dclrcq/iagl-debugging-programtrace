@@ -8,20 +8,20 @@ import java.util.Arrays;
 public enum CommandType {
     CONTINUE(new Continue()),
     FRAME(new Frame()),
-    LIST_BREAKPOINT(new ListBreakPoints()),
-    PRINT_VAR(new PrintVar()),
+    PRINT_VARS(new PrintVar()),
     RECEIVER(new Receiver()),
     RECEIVER_VARIABLES(new ReceiverVariables()),
     METHOD(new CurrentMethod()),
     ARGUMENTS(new CurrentMethodArguments()),
     SENDER(new Sender()),
+    BREAKPOINTS(new ListBreakPoints()),
     BREAK_ONCE(new SetBreakOnce()),
     BREAK_ON_COUNT(new SetBreakOnCount()),
-    BREAK_BEFORE_CALL(new SetBreakBeforeCall()),
+    BREAK_BEFORE_METHOD_CALL(new SetBreakBeforeCall()),
     BREAK(new SetBreakPoint()),
     STACK(new Stack()),
     STACK_TOP(new StackTop()),
-    STEP(new StepCommand()),
+    STEP(new Step()),
     STEP_OVER(new StepOver()),
     TEMPORARIES(new Temporaries());
 
@@ -31,11 +31,16 @@ public enum CommandType {
         this.command = debugCommand;
     }
 
-    private DebugCommand fromInput(String strCommand) {
+    public static DebugCommand fromInput(String strCommand) {
+        String replaced = strCommand.replace("-", "_");
         return Arrays.stream(values())
-                     .filter(commandType -> commandType.equals(valueOf(strCommand)))
+                     .filter(commandType -> commandType.name().equalsIgnoreCase(replaced))
                      .findFirst()
-                     .map(commandType -> this.command)
+                     .map(CommandType::getCommand)
                      .orElse(new NullDebugCommand());
+    }
+
+    public DebugCommand getCommand() {
+        return command;
     }
 }
