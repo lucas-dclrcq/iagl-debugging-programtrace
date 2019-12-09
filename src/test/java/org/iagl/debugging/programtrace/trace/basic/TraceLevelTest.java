@@ -1,5 +1,6 @@
-package org.iagl.debugging.programtrace.trace;
+package org.iagl.debugging.programtrace.trace.basic;
 
+import org.iagl.debugging.programtrace.trace.basic.TraceLevel;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

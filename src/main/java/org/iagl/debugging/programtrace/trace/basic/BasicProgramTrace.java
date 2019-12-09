@@ -1,4 +1,4 @@
-package org.iagl.debugging.programtrace.trace;
+package org.iagl.debugging.programtrace.trace.basic;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,10 +8,9 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class ProgramTrace {
-    private static ProgramTrace INSTANCE;
+public class BasicProgramTrace {
+    private static BasicProgramTrace INSTANCE;
 
     private final List<Trace> traces;
     private final ListIterator<Trace> tracesIterator;
@@ -23,8 +22,8 @@ public class ProgramTrace {
      * @param filename The path to a file containing serialized traces
      * @return An instance of ProgramTrace
      */
-    public static ProgramTrace fromFile(String filename) {
-        return new ProgramTrace(filename);
+    public static BasicProgramTrace fromFile(String filename) {
+        return new BasicProgramTrace(filename);
     }
 
     /**
@@ -32,21 +31,21 @@ public class ProgramTrace {
      *
      * @return An instance of ProgramTrace
      */
-    public static ProgramTrace getInstance() {
+    public static BasicProgramTrace getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new ProgramTrace();
+            INSTANCE = new BasicProgramTrace();
         }
 
         return INSTANCE;
     }
 
-    private ProgramTrace() {
+    private BasicProgramTrace() {
         this.traces = new ArrayList<>();
         this.tracesIterator = traces.listIterator();
         this.configuredTraceTraceLevel = readTraceLevelFromProperties().orElse(TraceLevel.FAIBLE);
     }
 
-    private ProgramTrace(String filename) {
+    private BasicProgramTrace(String filename) {
         this.configuredTraceTraceLevel = readTraceLevelFromProperties().orElse(TraceLevel.FAIBLE);
         final Path file = new File(filename).toPath();
 
@@ -89,7 +88,7 @@ public class ProgramTrace {
     }
 
     Optional<TraceLevel> readTraceLevelFromProperties() {
-        try (InputStream fis = ProgramTrace.class.getClassLoader().getResourceAsStream("application.properties")) {
+        try (InputStream fis = BasicProgramTrace.class.getClassLoader().getResourceAsStream("application.properties")) {
             final Properties properties = new Properties();
             properties.load(fis);
             final Optional<String> logLevel = Optional.ofNullable(properties.getProperty("log.level"));

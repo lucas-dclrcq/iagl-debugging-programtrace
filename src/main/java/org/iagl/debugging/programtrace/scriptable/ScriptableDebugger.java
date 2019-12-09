@@ -9,6 +9,7 @@ import com.sun.jdi.event.*;
 import com.sun.jdi.request.BreakpointRequest;
 import com.sun.jdi.request.ClassPrepareRequest;
 import com.sun.jdi.request.StepRequest;
+import org.iagl.debugging.programtrace.trace.debugger.DebuggerProgramTrace;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,10 +17,16 @@ import java.util.Map;
 
 public class ScriptableDebugger {
 
+    private DebuggerProgramTrace programTrace;
+
     private Class debugClass;
     private ArrayList<Integer> breakPointLines;
     private VirtualMachine vm;
     private ScriptableDebuggerCommandLineInterface commandLineInterface;
+
+    public ScriptableDebugger() {
+        this.programTrace = DebuggerProgramTrace.getInstance();
+    }
 
     public void addBreakPointAtLine(int lineNumber) {
         this.breakPointLines.add(lineNumber);
@@ -121,7 +128,7 @@ public class ScriptableDebugger {
 
     public void startDebugger() throws VMDisconnectedException, InterruptedException {
         commandLineInterface = new ScriptableDebuggerCommandLineInterface(this);
-        EventSet eventSet = null;
+        EventSet eventSet;
         while ((eventSet = vm.eventQueue().remove()) != null) {
             System.out.println(eventSet.toString());
             for (Event event : eventSet) {
