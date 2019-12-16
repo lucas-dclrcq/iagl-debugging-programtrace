@@ -89,7 +89,7 @@ public class ScriptableDebugger {
      * @param event
      */
     public void enableStepRequest(LocatableEvent event) {
-        StepRequest stepRequest = vm.eventRequestManager().createStepRequest(event.thread(), StepRequest.STEP_MIN, StepRequest.STEP_OVER);
+        StepRequest stepRequest = vm.eventRequestManager().createStepRequest(event.thread(), StepRequest.STEP_MIN, StepRequest.STEP_INTO);
         stepRequest.enable();
 
     }
