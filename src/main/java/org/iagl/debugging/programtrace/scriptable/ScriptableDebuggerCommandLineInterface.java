@@ -4,7 +4,7 @@ import com.sun.jdi.event.Event;
 import org.iagl.debugging.programtrace.cli.CommandType;
 import org.iagl.debugging.programtrace.command.DebugCommand;
 
-
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ScriptableDebuggerCommandLineInterface {
@@ -17,21 +17,15 @@ public class ScriptableDebuggerCommandLineInterface {
         commandScanner = new Scanner(System.in);
     }
 
-    public DebugCommand waitForInput(Event ev, String... args) {
-        DebugCommand command = scanCommand(ev);
+    public DebugCommand waitForInput(Event ev) {
+        final var inputCommand = commandScanner.nextLine().split(" ");
+        final var debugCommand = CommandType.fromInput(inputCommand[0]);
+        final var arguments = Arrays.copyOfRange(inputCommand, 1, inputCommand.length);
 
-        if(!command.execute(this.dbg, ev, args)) {
+        if(!debugCommand.execute(this.dbg, ev, arguments)) {
             return waitForInput(ev);
         }
 
-        return command;
+        return debugCommand;
     }
-
-    public DebugCommand scanCommand(Event ev) {
-        System.out.println(ev.toString());
-        String[] inputCommand = commandScanner.nextLine().split(" ");
-        System.out.println(inputCommand.toString());
-        return  CommandType.fromInput(inputCommand[0]);
-    }
-
 }
