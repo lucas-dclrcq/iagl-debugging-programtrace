@@ -33,7 +33,7 @@ _via Intellij_
 |receiver|   	|    |
 |sender|   	|    |
 |receiver-variables|   	|    |
-|method|   	|    |
+|method|  ok	|    |
 |arguments|   	|    |
 |print-var| ok |    |
 |break|   	|    |
