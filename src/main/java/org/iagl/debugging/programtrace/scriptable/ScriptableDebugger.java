@@ -132,7 +132,9 @@ public class ScriptableDebugger {
             for (Event event : eventSet) {
                 if (event instanceof ClassPrepareEvent) {
                     SetBreakPoint setBPCommand = new SetBreakPoint();
-                    setBPCommand.execute(this,  event, "break", "6", debugClass.getName());
+
+                    setBPCommand.execute(this, event,
+                                         breakPointLines.get(0).toString(), debugClass.getName());
                 }
 
                 if (event instanceof BreakpointEvent) {
