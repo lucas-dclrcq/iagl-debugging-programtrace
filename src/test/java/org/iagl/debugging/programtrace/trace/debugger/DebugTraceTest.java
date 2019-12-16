@@ -1,6 +1,5 @@
 package org.iagl.debugging.programtrace.trace.debugger;
 
-import org.iagl.debugging.programtrace.trace.debugger.DebugTrace;
 import org.junit.jupiter.api.Test;
 
 import java.util.AbstractMap;

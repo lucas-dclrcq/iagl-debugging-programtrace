@@ -16,6 +16,7 @@ import org.iagl.debugging.programtrace.trace.debugger.DebuggerProgramTrace;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ScriptableDebugger {
 
@@ -124,7 +125,7 @@ public class ScriptableDebugger {
         }
     }
 
-    public void startDebugger() throws VMDisconnectedException, InterruptedException {
+    public void startDebugger() throws VMDisconnectedException, InterruptedException, IncompatibleThreadStateException, AbsentInformationException {
         commandLineInterface = new ScriptableDebuggerCommandLineInterface(this);
         EventSet eventSet;
         while ((eventSet = vm.eventQueue().remove()) != null) {
@@ -143,7 +144,7 @@ public class ScriptableDebugger {
 
                 if (event instanceof StepEvent) {
                     event.request().disable();
-//                    addTrace(event);
+                    addTrace((LocatableEvent) event);
                     System.out.println("Stopped at: " + ((StepEvent) event).location().toString());
                     commandLineInterface.waitForInput(event);
                 }
@@ -153,27 +154,28 @@ public class ScriptableDebugger {
     }
 
     private void addTrace(LocatableEvent event) throws IncompatibleThreadStateException, AbsentInformationException {
-//        StackFrame stackFrame = event.thread().frame(0);
-//
-//        if (stackFrame.location().toString().contains(debugClass.getName())) {
-//            Map<LocalVariable, Value> visibleVariables = stackFrame.getValues(stackFrame.visibleVariables());
-//            Map<String, String> pouet = visibleVariables
-//                    .entrySet()
-//                    .stream()
-//                    .map(e -> new AbstractMap.SimpleEntry(e.getKey().name(), e.getValu))
-//                    .collect(Collectors.toMap(
-//                            Map.Entry::getKey,
-//                            Map.Entry::getValue
-//                    ));
-//
-//        }
+        StackFrame stackFrame = event.thread().frame(0);
+        final var debugClassName = debugClass.getName();
+
+        if (stackFrame.location().toString().contains(debugClassName)) {
+            final var formattedVariables = getFormattedVariables(stackFrame);
+            final var lineNumber = stackFrame.location().lineNumber();
+            final var methodName = stackFrame.location().method().name();
+
+            programTrace.trace(debugClassName, methodName, (long) lineNumber, formattedVariables);
+        }
     }
 
-//    public static String getStringForValue(Value value) {
-//        if (!(value instanceof PrimitiveValue)) {
-//            return "NOT_A_PRIMITIVE_VALUE";
-//        }
-
+    private Map<String, String> getFormattedVariables(StackFrame stackFrame) throws AbsentInformationException {
+        var visibleVariables = stackFrame.getValues(stackFrame.visibleVariables());
+        return visibleVariables
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        e -> e.getKey().name(),
+                        e -> e.getValue().toString()
+                ));
+    }
 
     public String getDebugClassName() {
         return debugClass.getName();

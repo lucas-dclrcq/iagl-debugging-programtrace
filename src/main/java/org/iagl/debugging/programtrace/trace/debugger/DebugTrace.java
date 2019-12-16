@@ -4,14 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.iagl.debugging.programtrace.trace.basic.Trace;
 
-import java.lang.reflect.Type;
 import java.util.Base64;
 import java.util.Map;
 import java.util.Objects;
 
 public class DebugTrace {
-    private final static Type MAP_TYPE = new TypeToken<Map<String, String>>() {}.getType();
-
     private String fileName;
     private String methodName;
     private Long lineNumber;
@@ -64,7 +61,7 @@ public class DebugTrace {
     static Map<String, String> getDeserializedVariables(String serializedVariables) {
         var gson = new Gson();
         final var decodedSerializedVariables = new String(Base64.getDecoder().decode(serializedVariables));
-        return gson.fromJson(decodedSerializedVariables, MAP_TYPE);
+        return gson.fromJson(decodedSerializedVariables, new TypeToken<Map<String, String>>() {}.getType());
     }
 
     public String getFileName() {
