@@ -1,4 +1,4 @@
-package org.iagl.debugging.programtrace.trace;
+package org.iagl.debugging.programtrace.trace.basic;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-class ProgramTraceTest {
+class BasicProgramTraceTest {
     @Test
     void given_valid_file_should_create_program_trace(@TempDir Path tempDir) throws IOException {
         // ARRANGE
@@ -24,7 +24,7 @@ class ProgramTraceTest {
         Files.write(traceFile, traceLines);
 
         // ACT
-        final ProgramTrace programTrace = ProgramTrace.fromFile(traceFile.toFile().getAbsolutePath());
+        final BasicProgramTrace programTrace = BasicProgramTrace.fromFile(traceFile.toFile().getAbsolutePath());
 
         // ASSERT
         assertThat(programTrace.getTraces())

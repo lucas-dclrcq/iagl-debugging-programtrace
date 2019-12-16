@@ -9,17 +9,28 @@ import com.sun.jdi.event.*;
 import com.sun.jdi.request.BreakpointRequest;
 import com.sun.jdi.request.ClassPrepareRequest;
 import com.sun.jdi.request.StepRequest;
+import org.iagl.debugging.programtrace.trace.debugger.DebuggerProgramTrace;
 
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ScriptableDebugger {
+
+    private DebuggerProgramTrace programTrace;
 
     private Class debugClass;
     private ArrayList<Integer> breakPointLines;
     private VirtualMachine vm;
     private ScriptableDebuggerCommandLineInterface commandLineInterface;
+
+    public ScriptableDebugger() {
+        this.programTrace = DebuggerProgramTrace.getInstance();
+    }
 
     public void addBreakPointAtLine(int lineNumber) {
         this.breakPointLines.add(lineNumber);
@@ -36,7 +47,7 @@ public class ScriptableDebugger {
     public VirtualMachine connectAndLaunchVM() throws IOException, IllegalConnectorArgumentsException, VMStartException {
         LaunchingConnector launchingConnector = Bootstrap.virtualMachineManager().defaultConnector();
         Map<String, Connector.Argument> arguments = launchingConnector.defaultArguments();
-        arguments.get("main").setValue(debugClass.getName());//debugClass.getName());
+        arguments.get("main").setValue(debugClass.getName());
         VirtualMachine vm = launchingConnector.launch(arguments);
         return vm;
     }
@@ -121,7 +132,7 @@ public class ScriptableDebugger {
 
     public void startDebugger() throws VMDisconnectedException, InterruptedException {
         commandLineInterface = new ScriptableDebuggerCommandLineInterface(this);
-        EventSet eventSet = null;
+        EventSet eventSet;
         while ((eventSet = vm.eventQueue().remove()) != null) {
             System.out.println(eventSet.toString());
             for (Event event : eventSet) {
@@ -137,6 +148,7 @@ public class ScriptableDebugger {
 
                 if (event instanceof StepEvent) {
                     event.request().disable();
+//                    addTrace(event);
                     System.out.println("Stopped at: " + ((StepEvent) event).location().toString());
                     commandLineInterface.waitForInput(event);
                 }
@@ -144,5 +156,28 @@ public class ScriptableDebugger {
             }
         }
     }
+
+    private void addTrace(LocatableEvent event) throws IncompatibleThreadStateException, AbsentInformationException {
+//        StackFrame stackFrame = event.thread().frame(0);
+//
+//        if (stackFrame.location().toString().contains(debugClass.getName())) {
+//            Map<LocalVariable, Value> visibleVariables = stackFrame.getValues(stackFrame.visibleVariables());
+//            Map<String, String> pouet = visibleVariables
+//                    .entrySet()
+//                    .stream()
+//                    .map(e -> new AbstractMap.SimpleEntry(e.getKey().name(), e.getValu))
+//                    .collect(Collectors.toMap(
+//                            Map.Entry::getKey,
+//                            Map.Entry::getValue
+//                    ));
+//
+//        }
+    }
+
+//    public static String getStringForValue(Value value) {
+//        if (!(value instanceof PrimitiveValue)) {
+//            return "NOT_A_PRIMITIVE_VALUE";
+//        }
+
 
 }

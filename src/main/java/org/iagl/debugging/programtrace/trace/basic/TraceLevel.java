@@ -1,4 +1,4 @@
-package org.iagl.debugging.programtrace.trace;
+package org.iagl.debugging.programtrace.trace.basic;
 
 import java.util.Arrays;
 import java.util.List;
