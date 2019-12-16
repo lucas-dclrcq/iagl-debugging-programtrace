@@ -30,28 +30,14 @@ class DebuggerProgramTraceTest {
     }
 
     @Test
-    void given_new_instance_then_cursor_should_be_at_minus_one() {
+    void given_new_instance_then_cursor_should_be_at_zero() {
         // ARRANGE
         final var instance = DebuggerProgramTrace.getInstance();
 
         // ACT
         final var cursor = instance.getCursor();
 
-        assertThat(cursor).isEqualTo(-1);
-    }
-
-    @Test
-    void given_two_traces_cursor_in_initial_state_next_should_return_first_trace() throws CannotMoveCursorException {
-        // ARRANGE
-        final var instance = DebuggerProgramTrace.getInstance();
-        instance.trace("FILENAME", "METHOD_NAME", 88L, Map.of("VAR1", "VAL1"));
-
-        // ACT
-        final var next = instance.next();
-
-        // ASSERT
-        assertThat(instance.getCursor()).isEqualTo(0);
-        assertThat(next.getFileName()).isEqualTo("FILENAME");
+        assertThat(cursor).isEqualTo(0);
     }
 
     @Test

@@ -18,26 +18,33 @@ _via Intellij_
 
 - Create a running configuration
 - Modify the working directory, it should be target/classes
+- Add an integer argument that represent the line number on which to set a first breakpoint (example: 6)
 - Click on the run button
+
+Notes:
+- To go into replay mode you should enter `replay on` (`replay off` to exit)
 
 ## Implemented commands
 
 |Command|Real-time|Replay|
 |---	|---	|--- |
-|step|ok|    |
-|step-over|   	|    |
+| replay | | :heavy_check_mark: |
+|step|:heavy_check_mark:|   :heavy_check_mark:|
+| previous | |:heavy_check_mark: |
+|step-over|   :heavy_check_mark:|    |
 |continue|   	|    |
-|temporaries|   	|    |
-|stack|   	|    |
+|temporaries|  :heavy_check_mark:	|  :heavy_check_mark: |
+|stack|    :heavy_check_mark: |    |
 |stack-top|   	|    |
 |receiver|   	|    |
-|sender|   	|    |
+|sender|   :heavy_check_mark: |    |
 |receiver-variables|   	|    |
-|method|  ok	|    |
+|method|  :heavy_check_mark:	|   :heavy_check_mark:|
 |arguments|   	|    |
-|print-var| ok |    |
+|print-var| :heavy_check_mark: |  :heavy_check_mark:  |
+|frame| :heavy_check_mark: |    |
 |break|   	|    |
-|breakpoints|   	|    |
+|breakpoints|  :heavy_check_mark:	|    |
 |break-once|   	|    |
 |break-on-count|   	|    |
 |break-before-method|   	|    |

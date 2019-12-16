@@ -42,7 +42,7 @@ public class DebuggerProgramTrace {
 
     private DebuggerProgramTrace() {
         this.traces = new ArrayList<>();
-        this.cursor = -1;
+        this.cursor = 0;
     }
 
     private DebuggerProgramTrace(String filename) {
@@ -82,6 +82,10 @@ public class DebuggerProgramTrace {
         return getTraceAtCursor();
     }
 
+    public DebugTrace current() {
+        return getTraceAtCursor();
+    }
+
     public DebugTrace previous() throws CannotMoveCursorException {
         if (cursorCanGoBackward()) {
             cursor--;
@@ -94,7 +98,7 @@ public class DebuggerProgramTrace {
 
     public DebugTrace reset() throws CannotMoveCursorException {
         checkTracesIsNotEmpty();
-        this.cursor = -1;
+        this.cursor = 0;
         return getTraceAtCursor();
     }
 

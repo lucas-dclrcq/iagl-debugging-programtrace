@@ -75,4 +75,8 @@ public class DebugTrace {
     public Long getLineNumber() {
         return lineNumber;
     }
+
+    public Map<String, String> getVariables() {
+        return variables;
+    }
 }

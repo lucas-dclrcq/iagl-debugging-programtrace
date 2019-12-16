@@ -26,8 +26,10 @@ public class ScriptableDebugger {
     private ArrayList<Integer> breakPointLines;
     private VirtualMachine vm;
     private ScriptableDebuggerCommandLineInterface commandLineInterface;
+    private boolean replayMode;
 
     public ScriptableDebugger() {
+        this.replayMode = false;
         this.programTrace = DebuggerProgramTrace.getInstance();
     }
 
@@ -187,5 +189,17 @@ public class ScriptableDebugger {
 
     public ArrayList<Integer> getBreakPointLines() {
         return breakPointLines;
+    }
+
+    public void activateReplayMode() {
+        this.replayMode = true;
+    }
+
+    public void deactivateReplayMode() {
+        this.replayMode = false;
+    }
+
+    public boolean isReplayModeActivated() {
+        return replayMode;
     }
 }
