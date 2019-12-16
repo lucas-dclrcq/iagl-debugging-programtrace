@@ -27,10 +27,14 @@ public class Temporaries extends DebugCommand {
 
         if (variables != null) {
             variables.forEach((s, s2) -> System.out.println(s + " -> " + s2));
+
+            if (variables.isEmpty()) {
+                System.out.println("No variables in current frame");
+            }
         } else {
             System.out.println("Could not retrieve variables");
-
         }
+
 
         return false;
     }

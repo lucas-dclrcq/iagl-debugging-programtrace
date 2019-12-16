@@ -29,9 +29,7 @@ public class CurrentMethod extends DebugCommand {
                 System.out.println("Could not retrieve current method name");
             }
 
-            debugger.enableStepRequest(locatableEvent);
-
-            return true;
+            return false;
         }
     }
 }

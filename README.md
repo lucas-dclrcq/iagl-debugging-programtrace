@@ -40,7 +40,7 @@ Notes:
 |sender|   :heavy_check_mark: |    |
 |receiver-variables|   	|    |
 |method|  :heavy_check_mark:	|   :heavy_check_mark:|
-|arguments|   	|    |
+|arguments|   :heavy_check_mark:	|    |
 |print-var| :heavy_check_mark: |  :heavy_check_mark:  |
 |frame| :heavy_check_mark: |    |
 |break|   	|    |
