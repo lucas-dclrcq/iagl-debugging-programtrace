@@ -170,7 +170,7 @@ public class ScriptableDebugger {
         }
     }
 
-    public static Map<String, String> getFormattedVariables(StackFrame stackFrame) throws AbsentInformationException {
+    public Map<String, String> getFormattedVariables(StackFrame stackFrame) throws AbsentInformationException {
         var visibleVariables = stackFrame.getValues(stackFrame.visibleVariables());
         return visibleVariables
                 .entrySet()

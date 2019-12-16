@@ -19,7 +19,7 @@ public class PrintVar extends DebugCommand {
         final var variableName = parameters[0];
 
         try {
-            final var formattedVariables = ScriptableDebugger.getFormattedVariables(locatableEvent.thread().frame(0));
+            final var formattedVariables = debugger.getFormattedVariables(locatableEvent.thread().frame(0));
             final var variableValue = formattedVariables.get(variableName);
 
             System.out.println(variableName + " => " + variableValue);
