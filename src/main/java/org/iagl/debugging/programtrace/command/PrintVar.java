@@ -5,6 +5,9 @@ import com.sun.jdi.IncompatibleThreadStateException;
 import com.sun.jdi.event.Event;
 import com.sun.jdi.event.LocatableEvent;
 import org.iagl.debugging.programtrace.scriptable.ScriptableDebugger;
+import org.iagl.debugging.programtrace.trace.debugger.DebuggerProgramTrace;
+
+import java.util.Map;
 
 public class PrintVar extends DebugCommand {
     @Override
@@ -17,17 +20,25 @@ public class PrintVar extends DebugCommand {
         }
 
         final var variableName = parameters[0];
+        Map<String, String> formattedVariables = null;
 
-        try {
-            final var formattedVariables = ScriptableDebugger.getFormattedVariables(locatableEvent.thread().frame(0));
-            final var variableValue = formattedVariables.get(variableName);
+        if (debugger.isReplayModeActivated()) {
+            formattedVariables = DebuggerProgramTrace.getInstance().current().getVariables();
+        } else {
+            try {
+                formattedVariables = ScriptableDebugger.getFormattedVariables(locatableEvent.thread().frame(0));
+            } catch (IncompatibleThreadStateException | AbsentInformationException e) {
+                System.out.println("Could not retrieve frame's variables");
+            }
+        }
 
-            System.out.println(variableName + " => " + variableValue);
-
-        } catch (IncompatibleThreadStateException | AbsentInformationException e) {
-            System.out.println("Could not retrieve frame's variables");
-        } catch (NullPointerException e) {
-            System.out.println("No variable with name=" + variableName + " was found.");
+        if (formattedVariables != null) {
+            try {
+                final var variableValue = formattedVariables.get(variableName);
+                System.out.println(variableName + " => " + variableValue);
+            } catch (NullPointerException e) {
+                System.out.println("No variable with name " + variableName + " was found");
+            }
         }
 
         return false;

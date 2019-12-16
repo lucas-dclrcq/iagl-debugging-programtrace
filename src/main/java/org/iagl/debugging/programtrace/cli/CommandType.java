@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 public enum CommandType {
     REPLAY(new Replay()),
+    PREVIOUS(new Previous()),
     CONTINUE(new Continue()),
     FRAME(new Frame()),
     PRINT_VAR(new PrintVar()),

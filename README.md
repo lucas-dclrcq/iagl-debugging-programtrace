@@ -28,7 +28,9 @@ Notes:
 
 |Command|Real-time|Replay|
 |---	|---	|--- |
+| replay | | :heavy_check_mark: |
 |step|:heavy_check_mark:|   :heavy_check_mark:|
+| previous | |:heavy_check_mark: |
 |step-over|   :heavy_check_mark:|    |
 |continue|   	|    |
 |temporaries|  :heavy_check_mark:	|  :heavy_check_mark: |
@@ -39,7 +41,7 @@ Notes:
 |receiver-variables|   	|    |
 |method|  :heavy_check_mark:	|   :heavy_check_mark:|
 |arguments|   	|    |
-|print-var| :heavy_check_mark: |    |
+|print-var| :heavy_check_mark: |  :heavy_check_mark:  |
 |frame| :heavy_check_mark: |    |
 |break|   	|    |
 |breakpoints|  :heavy_check_mark:	|    |
