@@ -1,5 +1,7 @@
 # CAL/DEBUGGING - TP3
 
+Paul Delafosse & Lucas Declercq
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=program-trace&metric=alert_status)](https://sonarcloud.io/dashboard?id=program-trace) [![GitHub Actions](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fatrox%2Fsync-dotenv%2Fbadge&label=build&logo=none)](https://github.com/lucas-dclrcq/iagl-debugging-programtrace)
 
 ## Prerequisites
