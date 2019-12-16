@@ -58,7 +58,6 @@ public class ScriptableDebugger {
      */
     public void enableClassPrepareRequest(VirtualMachine vm) {
         ClassPrepareRequest classPrepareRequest = vm.eventRequestManager().createClassPrepareRequest();
-        System.out.println(debugClass.getName());
         classPrepareRequest.addClassFilter(debugClass.getName());
         classPrepareRequest.enable();
     }
@@ -129,7 +128,6 @@ public class ScriptableDebugger {
         commandLineInterface = new ScriptableDebuggerCommandLineInterface(this);
         EventSet eventSet;
         while ((eventSet = vm.eventQueue().remove()) != null) {
-            System.out.println(eventSet.toString());
             for (Event event : eventSet) {
                 if (event instanceof ClassPrepareEvent) {
                     SetBreakPoint setBPCommand = new SetBreakPoint();
@@ -166,7 +164,7 @@ public class ScriptableDebugger {
         }
     }
 
-    private Map<String, String> getFormattedVariables(StackFrame stackFrame) throws AbsentInformationException {
+    public static Map<String, String> getFormattedVariables(StackFrame stackFrame) throws AbsentInformationException {
         var visibleVariables = stackFrame.getValues(stackFrame.visibleVariables());
         return visibleVariables
                 .entrySet()

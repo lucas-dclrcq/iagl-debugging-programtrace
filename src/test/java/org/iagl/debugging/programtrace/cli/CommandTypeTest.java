@@ -14,7 +14,7 @@ class CommandTypeTest {
             "step:Step", "step-over:StepOver", "arguments:CurrentMethodArguments",
             "continue:Continue", "frame:Frame", "temporaries:Temporaries", "stack:Stack",
             "stack-top:StackTop", "receiver:Receiver", "sender:Sender",
-            "receiver-variables:ReceiverVariables", "method:CurrentMethod","print-vars:PrintVar",
+            "receiver-variables:ReceiverVariables", "method:CurrentMethod","print-var:PrintVar",
             "break:SetBreakPoint", "breakpoints:ListBreakPoints", "break-once:SetBreakOnce",
             "break-on-count:SetBreakOnCount", "break-before-method-call:SetBreakBeforeCall" },
             delimiter = ':')

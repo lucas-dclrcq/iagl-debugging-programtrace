@@ -35,7 +35,7 @@ _via Intellij_
 |receiver-variables|   	|    |
 |method|   	|    |
 |arguments|   	|    |
-|print-var|   	|    |
+|print-var| ok |    |
 |break|   	|    |
 |breakpoints|   	|    |
 |break-once|   	|    |

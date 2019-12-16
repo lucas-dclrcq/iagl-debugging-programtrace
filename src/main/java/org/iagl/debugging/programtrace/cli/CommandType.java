@@ -8,7 +8,7 @@ import java.util.Arrays;
 public enum CommandType {
     CONTINUE(new Continue()),
     FRAME(new Frame()),
-    PRINT_VARS(new PrintVar()),
+    PRINT_VAR(new PrintVar()),
     RECEIVER(new Receiver()),
     RECEIVER_VARIABLES(new ReceiverVariables()),
     METHOD(new CurrentMethod()),
