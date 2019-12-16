@@ -1,7 +1,6 @@
 package org.iagl.debugging.programtrace.command;
 
 import com.sun.jdi.event.Event;
-import org.iagl.debugging.programtrace.command.DebugCommand;
 import org.iagl.debugging.programtrace.scriptable.ScriptableDebugger;
 
 public class StackTop extends DebugCommand {

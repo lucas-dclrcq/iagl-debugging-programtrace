@@ -9,15 +9,13 @@ import com.sun.jdi.event.*;
 import com.sun.jdi.request.BreakpointRequest;
 import com.sun.jdi.request.ClassPrepareRequest;
 import com.sun.jdi.request.StepRequest;
+import org.iagl.debugging.programtrace.command.SetBreakPoint;
 import org.iagl.debugging.programtrace.trace.debugger.DebuggerProgramTrace;
 
+
 import java.io.IOException;
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ScriptableDebugger {
 
@@ -100,10 +98,6 @@ public class ScriptableDebugger {
         System.out.println("Error: unknown command " + commandName);
     }
 
-    public Boolean executeCommand(DebugCommand cmd) {
-        return cmd.executeOn(this);
-    }
-
     /***********
      * DEBUGGER CREATION
      * ***********/
@@ -137,9 +131,8 @@ public class ScriptableDebugger {
             System.out.println(eventSet.toString());
             for (Event event : eventSet) {
                 if (event instanceof ClassPrepareEvent) {
-                    SetBreakpointDebugCommand setBPCommand = new SetBreakpointDebugCommand();
-                    setBPCommand.setParameters(new String[]{"break", "6", debugClass.getName()});
-                    executeCommand(setBPCommand);
+                    SetBreakPoint setBPCommand = new SetBreakPoint();
+                    setBPCommand.execute(this,  event, "break", "6", debugClass.getName());
                 }
 
                 if (event instanceof BreakpointEvent) {
@@ -180,4 +173,7 @@ public class ScriptableDebugger {
 //        }
 
 
+    public String getDebugClassName() {
+        return debugClass.getName();
+    }
 }
