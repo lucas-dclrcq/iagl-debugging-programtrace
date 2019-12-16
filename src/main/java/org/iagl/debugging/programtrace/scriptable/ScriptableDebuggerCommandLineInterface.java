@@ -22,7 +22,7 @@ public class ScriptableDebuggerCommandLineInterface {
         final var debugCommand = CommandType.fromInput(inputCommand[0]);
         final var arguments = Arrays.copyOfRange(inputCommand, 1, inputCommand.length);
 
-        if(!debugCommand.execute(this.dbg, ev, arguments)) {
+        if (!debugCommand.execute(this.dbg, ev, arguments)) {
             return waitForInput(ev);
         }
 
