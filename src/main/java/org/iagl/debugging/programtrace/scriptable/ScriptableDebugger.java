@@ -178,4 +178,8 @@ public class ScriptableDebugger {
     public String getDebugClassName() {
         return debugClass.getName();
     }
+
+    public ArrayList<Integer> getBreakPointLines() {
+        return breakPointLines;
+    }
 }
