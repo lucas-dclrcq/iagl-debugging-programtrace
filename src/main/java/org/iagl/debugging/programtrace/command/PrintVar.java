@@ -26,7 +26,7 @@ public class PrintVar extends DebugCommand {
             formattedVariables = DebuggerProgramTrace.getInstance().current().getVariables();
         } else {
             try {
-                formattedVariables = ScriptableDebugger.getFormattedVariables(locatableEvent.thread().frame(0));
+                formattedVariables = debugger.getFormattedVariables(locatableEvent.thread().frame(0));
             } catch (IncompatibleThreadStateException | AbsentInformationException e) {
                 System.out.println("Could not retrieve frame's variables");
             }

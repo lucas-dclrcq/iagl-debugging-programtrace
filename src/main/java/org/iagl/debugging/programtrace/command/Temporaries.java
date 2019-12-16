@@ -19,7 +19,7 @@ public class Temporaries extends DebugCommand {
             variables = DebuggerProgramTrace.getInstance().current().getVariables();
         } else {
             try {
-                variables = ScriptableDebugger.getFormattedVariables(locatableEvent.thread().frame(0));
+                variables = debugger.getFormattedVariables(locatableEvent.thread().frame(0));
             } catch (IncompatibleThreadStateException | AbsentInformationException e) {
                 System.out.println("Could not retrieve frame's variables");
             }
