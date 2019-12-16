@@ -1,23 +1,21 @@
 package org.iagl.debugging.programtrace.trace.debugger;
 
-import com.sun.jdi.event.Event;
-import com.sun.jdi.event.StepEvent;
-import org.iagl.debugging.programtrace.trace.basic.Trace;
-import org.iagl.debugging.programtrace.trace.basic.TraceLevel;
+import org.iagl.debugging.programtrace.exception.CannotMoveCursorException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DebuggerProgramTrace {
     private static DebuggerProgramTrace INSTANCE;
 
     private final List<DebugTrace> traces;
+    private int cursor;
 
     /**
      * Load traces from a file
@@ -44,6 +42,7 @@ public class DebuggerProgramTrace {
 
     private DebuggerProgramTrace() {
         this.traces = new ArrayList<>();
+        this.cursor = -1;
     }
 
     private DebuggerProgramTrace(String filename) {
@@ -56,22 +55,74 @@ public class DebuggerProgramTrace {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        this.cursor = -1;
     }
 
+    /**
+     * Add a trace
+     *
+     * @param fileName
+     * @param methodName
+     * @param lineNumber
+     * @param variables
+     */
     public void trace(String fileName, String methodName, Long lineNumber, Map<String, String> variables) {
         final var debugTrace = new DebugTrace(fileName, methodName, lineNumber, variables);
         traces.add(debugTrace);
     }
 
-    public Trace next() {
-        return null;
+    public DebugTrace next() throws CannotMoveCursorException {
+        if (cursorCanGoForward()) {
+            cursor++;
+        } else {
+            throw new CannotMoveCursorException("No trace going forward");
+        }
+
+        return getTraceAtCursor();
     }
 
-    public Trace previous() {
-        return null;
+    public DebugTrace previous() throws CannotMoveCursorException {
+        if (cursorCanGoBackward()) {
+            cursor--;
+        } else {
+            throw new CannotMoveCursorException("No trace going backward");
+        }
+
+        return getTraceAtCursor();
+    }
+
+    public DebugTrace reset() throws CannotMoveCursorException {
+        checkTracesIsNotEmpty();
+        this.cursor = -1;
+        return getTraceAtCursor();
     }
 
     public List<DebugTrace> getTraces() {
         return traces;
+    }
+
+    int getCursor() {
+        return cursor;
+    }
+
+    DebugTrace getTraceAtCursor() {
+        return traces.get(cursor);
+    }
+
+    boolean cursorCanGoForward() throws CannotMoveCursorException {
+        checkTracesIsNotEmpty();
+        return cursor <= traces.size() - 2;
+    }
+
+    boolean cursorCanGoBackward() throws CannotMoveCursorException {
+        checkTracesIsNotEmpty();
+        return cursor >= 1;
+    }
+
+    void checkTracesIsNotEmpty() throws CannotMoveCursorException {
+        if (traces.isEmpty()) {
+            throw new CannotMoveCursorException("No traces present.");
+        }
     }
 }

@@ -66,4 +66,16 @@ public class DebugTrace {
         final var decodedSerializedVariables = new String(Base64.getDecoder().decode(serializedVariables));
         return gson.fromJson(decodedSerializedVariables, MAP_TYPE);
     }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public Long getLineNumber() {
+        return lineNumber;
+    }
 }
