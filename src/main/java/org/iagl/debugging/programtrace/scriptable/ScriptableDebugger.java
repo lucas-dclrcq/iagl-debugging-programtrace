@@ -94,6 +94,12 @@ public class ScriptableDebugger {
 
     }
 
+    public void enableStepOverRequest(LocatableEvent event) {
+        StepRequest stepRequest = vm.eventRequestManager().createStepRequest(event.thread(), StepRequest.STEP_LINE, StepRequest.STEP_OVER);
+        stepRequest.enable();
+
+    }
+
     public void unknownCommandRequest(String commandName) {
         System.out.println("Error: unknown command " + commandName);
     }
