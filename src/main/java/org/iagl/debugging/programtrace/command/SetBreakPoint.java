@@ -8,7 +8,7 @@ public class SetBreakPoint extends DebugCommand {
     @Override
     public boolean execute(ScriptableDebugger debugger, Event event, String... parameters) {
         try {
-            debugger.setBreakPoint(debugger.getDebugClassName(), 6);
+            debugger.setBreakPoint(debugger.getDebugClassName(), Integer.parseInt(parameters[0]));
         } catch (AbsentInformationException e) {
             e.printStackTrace();
             return false;

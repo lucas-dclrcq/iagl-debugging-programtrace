@@ -6,7 +6,8 @@ public class JDIExampleDebugger {
     public static void main(String[] args) {
 
         ScriptableDebugger debuggerInstance = new ScriptableDebugger();
-        debuggerInstance.attachTo(JDIExampleDebuggee.class, 4);
+        int startBreakPoint = Integer.parseInt(args[0]);
+        debuggerInstance.attachTo(JDIExampleDebuggee.class, startBreakPoint);
 
     }
 }
