@@ -29,6 +29,7 @@ public class Temporaries extends DebugCommand {
             variables.forEach((s, s2) -> System.out.println(s + " -> " + s2));
         } else {
             System.out.println("Could not retrieve variables");
+
         }
 
         return false;

@@ -91,7 +91,7 @@ public class ScriptableDebugger {
      * @param event
      */
     public void enableStepRequest(LocatableEvent event) {
-        StepRequest stepRequest = vm.eventRequestManager().createStepRequest(event.thread(), StepRequest.STEP_MIN, StepRequest.STEP_OVER);
+        StepRequest stepRequest = vm.eventRequestManager().createStepRequest(event.thread(), StepRequest.STEP_MIN, StepRequest.STEP_INTO);
         stepRequest.enable();
 
     }
@@ -172,7 +172,7 @@ public class ScriptableDebugger {
         }
     }
 
-    public static Map<String, String> getFormattedVariables(StackFrame stackFrame) throws AbsentInformationException {
+    public Map<String, String> getFormattedVariables(StackFrame stackFrame) throws AbsentInformationException {
         var visibleVariables = stackFrame.getValues(stackFrame.visibleVariables());
         return visibleVariables
                 .entrySet()
