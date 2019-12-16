@@ -1,11 +1,19 @@
 package org.iagl.debugging.programtrace.command;
 
+import com.sun.jdi.AbsentInformationException;
 import com.sun.jdi.event.Event;
 import org.iagl.debugging.programtrace.scriptable.ScriptableDebugger;
 
 public class SetBreakPoint extends DebugCommand {
     @Override
     public boolean execute(ScriptableDebugger debugger, Event event, String... parameters) {
-        return false;
+        try {
+            debugger.setBreakPoint(debugger.getDebugClassName(), 6);
+        } catch (AbsentInformationException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }
